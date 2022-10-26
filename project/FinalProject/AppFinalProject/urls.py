@@ -7,5 +7,6 @@ urlpatterns = [
     path('contact/',views.contact,name='contact'),
     path('about/',views.about,name='about'),
     path('users/',views.show_users),
+    path('search',views.BuscarUser.as_view()),
 
 ]
