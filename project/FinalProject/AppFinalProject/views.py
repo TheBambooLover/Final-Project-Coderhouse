@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar
+from AppFinalProject.forms import Buscar, UserForm
 from django.views import View
 
 def home(request):
@@ -32,8 +32,11 @@ class BuscarUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
-            users = User.objects.filter(nombre__icontains=username).all()
+            users = User.objects.filter(username__icontains=username).all()
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'users':users})
         return render(request, self.template_name, {"form": form})
+
+class AltaUser(View):
+    pass
