@@ -7,10 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Comments</h1>
+    <h1>Crear Post</h1>
+    <form action="create-comment" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="crear post">
+        <input type="submit" value="crear comentario">
       </form>
     
       <h2 style="color:green">{{msg_exito}}</h2>

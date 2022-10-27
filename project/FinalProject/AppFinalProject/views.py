@@ -1,6 +1,5 @@
 from tokenize import group
 from django.shortcuts import render
-import AppFinalProject
 from AppFinalProject.models import User
 from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post
 from django.views import View
@@ -65,6 +64,43 @@ class AltaUser(View):
         return render(request, self.template_name, {"form": form})
 
 class CreatePost(View):
-    pass
+    form_class = PostForm
+    template_name = "AppFinalProject/create_post.html"
+    initial = {'writter':"", 'title':"", 'text':"" ,'image':""}
+
+    def get(self, request):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            msg_exito = f"se cargo con éxito el artículo {form.cleaned_data.get('title')}"
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form':form, 
+                                                        'msg_exito': msg_exito})
+        
+        return render(request, self.template_name, {"form": form})
+
+
+
 class CreateComment(View):
-    pass
+    form_class = CommentForm
+    template_name = "AppFinalProject/create_comment.html"
+    initial = {'user':"", 'text':"", 'post':""}
+
+    def get(self, request):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            msg_exito = f"se cargo con éxito el comentario para el post {form.cleaned_data.get('post')}"
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form':form, 
+                                                        'msg_exito': msg_exito})
+        
+        return render(request, self.template_name, {"form": form})
