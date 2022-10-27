@@ -2,7 +2,7 @@ from tokenize import group
 from django.shortcuts import render
 import AppFinalProject
 from AppFinalProject.models import Group, User
-from AppFinalProject.forms import Buscar, UserForm
+from AppFinalProject.forms import Buscar, PostForm, UserForm
 from django.views import View
 
 def home(request):
@@ -43,7 +43,7 @@ class BuscarUser(View):
 class AltaUser(View):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
-    initial = {'username':"", 'password':"", 'email':""}
+    initial = {'username':"", 'password':"", 'email':"" ,'group':"2"}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -54,6 +54,25 @@ class AltaUser(View):
         if form.is_valid():
             form.save()
             msg_exito = f"se cargo con éxito el usuario {form.cleaned_data.get('username')}"
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form':form, 
+                                                        'msg_exito': msg_exito})
+        
+        return render(request, self.template_name, {"form": form})
+
+class CreatePost(View):
+    form_class = PostForm
+    template_name = "AppFinalProject/create_post.html"
+    initial = {'title':"",'text':"",'image':""}
+    def get(self, request):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            msg_exito = f"Has publicado un post{form.cleaned_data.get('writter')}"
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'msg_exito': msg_exito})

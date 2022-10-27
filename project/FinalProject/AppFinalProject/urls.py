@@ -10,5 +10,6 @@ urlpatterns = [
     path('users/',views.show_users),
     path('users-search',views.BuscarUser.as_view()),
     path('user-create',views.AltaUser.as_view()),
+    path('create-post',views.CreatePost.as_view()),
 
 ]
