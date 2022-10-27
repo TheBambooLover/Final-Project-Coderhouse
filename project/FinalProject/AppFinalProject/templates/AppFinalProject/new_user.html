@@ -7,14 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Nuevo user</h1>
-    <form action="" method="post">
+    <h1>Create new user</h1>
+    <form action="user-create" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Submit">
+        <input type="submit" value="Crear">
       </form>
     
       <h2 style="color:green">{{msg_exito}}</h2>
-    
 </body>
 </html>

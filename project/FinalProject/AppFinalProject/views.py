@@ -1,5 +1,7 @@
+from tokenize import group
 from django.shortcuts import render
-from AppFinalProject.models import User
+import AppFinalProject
+from AppFinalProject.models import Group, User
 from AppFinalProject.forms import Buscar, UserForm
 from django.views import View
 
@@ -39,4 +41,21 @@ class BuscarUser(View):
         return render(request, self.template_name, {"form": form})
 
 class AltaUser(View):
-    pass
+    form_class = UserForm
+    template_name = "AppFinalProject/new_user.html"
+    initial = {'username':"", 'password':"", 'email':""}
+
+    def get(self, request):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            msg_exito = f"se cargo con éxito el usuario {form.cleaned_data.get('username')}"
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form':form, 
+                                                        'msg_exito': msg_exito})
+        
+        return render(request, self.template_name, {"form": form})
