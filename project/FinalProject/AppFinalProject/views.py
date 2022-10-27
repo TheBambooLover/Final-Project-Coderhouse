@@ -1,8 +1,8 @@
 from tokenize import group
 from django.shortcuts import render
 import AppFinalProject
-from AppFinalProject.models import Group, User
-from AppFinalProject.forms import Buscar, PostForm, UserForm
+from AppFinalProject.models import User
+from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post
 from django.views import View
 
 def home(request):
@@ -20,6 +20,10 @@ def about(request):
 def show_users(request):
   users = User.objects.all()
   return render(request, "AppFinalProject/users.html", {"users": users})
+
+def show_writters(request):
+    writters = Post.objects.all()
+    return render(request,"AppFinalProject/writters.html",{"writters":writters})
 
 class BuscarUser(View):
     form_class = Buscar
@@ -61,20 +65,6 @@ class AltaUser(View):
         return render(request, self.template_name, {"form": form})
 
 class CreatePost(View):
-    form_class = PostForm
-    template_name = "AppFinalProject/create_post.html"
-    initial = {'title':"",'text':"",'image':""}
-    def get(self, request):
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form':form})
-    
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            msg_exito = f"Has publicado un post{form.cleaned_data.get('writter')}"
-            form = self.form_class(initial=self.initial)
-            return render(request, self.template_name, {'form':form, 
-                                                        'msg_exito': msg_exito})
-        
-        return render(request, self.template_name, {"form": form})
+    pass
+class CreateComment(View):
+    pass
