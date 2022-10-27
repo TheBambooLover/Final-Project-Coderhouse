@@ -22,7 +22,7 @@ class User(models.Model):
 class Post(models.Model):
     writter = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    votes=models.IntegerField()
+    votes=models.IntegerField(default=0)
     text=models.CharField(max_length=300)
     image=models.CharField(max_length=300, null=True)
 
