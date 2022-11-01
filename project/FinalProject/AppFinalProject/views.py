@@ -27,7 +27,7 @@ def show_writters(request):
 class BuscarUser(View):
     form_class = Buscar
     template_name = 'AppFinalProject/search.html'
-    initial = {"Usuario":""}
+    initial = {"User":""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -37,7 +37,7 @@ class BuscarUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
-            users = User.objects.filter(username__icontains=username).all()
+            users = User.objects.filter(username__icontains=username,group_id=2).all()
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'users':users})
@@ -83,8 +83,6 @@ class CreatePost(View):
         
         return render(request, self.template_name, {"form": form})
 
-
-
 class CreateComment(View):
     form_class = CommentForm
     template_name = "AppFinalProject/create_comment.html"
@@ -104,7 +102,6 @@ class CreateComment(View):
                                                         'msg_exito': msg_exito})
         
         return render(request, self.template_name, {"form": form})
-
 
 class CreateWritter(View):
     form_class = WritterForm
