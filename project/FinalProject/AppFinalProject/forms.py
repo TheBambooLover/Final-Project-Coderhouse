@@ -12,6 +12,11 @@ class UserForm(forms.ModelForm):
     model = User
     fields = ['username', 'password', 'email', 'group']
 
+class WritterForm(forms.ModelForm):
+  class Meta:
+    model = User
+    fields = ['username', 'password', 'email','about', 'group']
+
 
 class PostForm(forms.ModelForm):
   class Meta:

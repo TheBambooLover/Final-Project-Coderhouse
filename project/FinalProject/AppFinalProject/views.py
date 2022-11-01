@@ -1,7 +1,7 @@
 from tokenize import group
 from django.shortcuts import render
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post
+from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
 from django.views import View
 
 def home(request):
@@ -21,7 +21,7 @@ def show_users(request):
   return render(request, "AppFinalProject/users.html", {"users": users})
 
 def show_writters(request):
-    writters = Post.objects.all()
+    writters = User.objects.filter(group_id=3).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
 
 class BuscarUser(View):
@@ -43,7 +43,7 @@ class BuscarUser(View):
                                                         'users':users})
         return render(request, self.template_name, {"form": form})
 
-class AltaUser(View):
+class CreateUser(View):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
     initial = {'username':"", 'password':"", 'email':"" ,'group':"2"}
@@ -99,6 +99,27 @@ class CreateComment(View):
         if form.is_valid():
             form.save()
             msg_exito = f"se cargo con éxito el comentario para el post {form.cleaned_data.get('post')}"
+            form = self.form_class(initial=self.initial)
+            return render(request, self.template_name, {'form':form, 
+                                                        'msg_exito': msg_exito})
+        
+        return render(request, self.template_name, {"form": form})
+
+
+class CreateWritter(View):
+    form_class = WritterForm
+    template_name = "AppFinalProject/new_writter.html"
+    initial = {'username':"", 'password':"", 'email':"" ,'group':"3", 'about':""}
+
+    def get(self, request):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            msg_exito = f"se cargo con éxito el escritor {form.cleaned_data.get('username')}"
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'msg_exito': msg_exito})

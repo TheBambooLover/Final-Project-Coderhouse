@@ -8,11 +8,12 @@
 </head>
 <body>
 
-    <h1>Users</h1>
+    <h1>Writters</h1>
 
     {% for writter in writters %}
         <ul>
-            <li> Usuario: {{writter.writter}} </li>
+            <li> Writter: {{writter.username}} </li>
+            <li> Description: {{writter.about}}</li>
         </ul>
     {% endfor %}
     
