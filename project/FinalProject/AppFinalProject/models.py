@@ -1,6 +1,5 @@
 from tkinter import CASCADE
 from unittest.mock import DEFAULT
-from certifi import where
 from django.db import models
 
 class Group(models.Model):
