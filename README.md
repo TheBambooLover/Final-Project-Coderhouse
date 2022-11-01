@@ -2,6 +2,7 @@
 Final project for Codehouse Python course: Rodriguez Canovari Santiago, Tomas Oldenburg, Sergio Daniel Romero
 
 Funcionalidades y paths:
+
     Creación de usuarios:/AppFinalProject/user-create (El path será renombrado a create-user en la próxima versión)
     Listado de usuarios:/AppFinalProject/users/
     Listado de escritores:/AppFinalProject/writters
