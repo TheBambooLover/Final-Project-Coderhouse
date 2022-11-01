@@ -9,7 +9,7 @@ Funcionalidades y paths:
     Creación de comentarios:/AppFinalProject/create-comment
     Creación de grupos (Solo desde admin django):/admin
 
-    Tambien se pueden apreciar las distintas vistas donde serán implementadas dichas funcionalidades en el path:/AppFinalProject/home/
+Tambien se pueden apreciar las distintas vistas donde serán implementadas dichas funcionalidades en el path:/AppFinalProject/home/
 
 Cada uno está implementado con un form en la URL indicado.
 
