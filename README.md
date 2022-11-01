@@ -3,7 +3,7 @@ Final project for Codehouse Python course: Rodriguez Canovari Santiago, Tomas Ol
 
 Funcionalidades y paths:
 
-    Creación de usuarios:/AppFinalProject/user-create (El path será renombrado a create-user en la próxima versión)
+    Creación de usuarios:/AppFinalProject/create-user
     Listado de usuarios:/AppFinalProject/users/
     Listado de escritores:/AppFinalProject/writters
     Creación de posts:/AppFinalProject/create-post
@@ -15,5 +15,3 @@ Tambien se pueden apreciar las distintas vistas donde serán implementadas dicha
 Cada uno está implementado con un form en la URL indicado.
 
 Se adjunta una DB ya creada con datos de prueba para que pueda ser probado de manera más comoda.
-
-Hay un bug conocido con la info de los writters que será solucionado en la próxima versión.
