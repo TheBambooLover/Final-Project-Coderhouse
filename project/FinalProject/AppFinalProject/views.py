@@ -9,10 +9,7 @@ def home(request):
 
 def posts(request):
         return render(request, "AppFinalProject/posts.html")
-
-def contact(request):
-        return render(request, "AppFinalProject/contact.html")
-
+        
 def about(request):
         return render(request, "AppFinalProject/about.html")
 
