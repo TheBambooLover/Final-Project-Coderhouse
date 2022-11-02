@@ -46,7 +46,7 @@ class BuscarUser(View):
 class CreateUser(View):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
-    initial = {'username':"", 'password':"", 'email':"" ,'group':"2"}
+    initial = {'username':"", 'password':"", 'email':"" , 'group':"2"}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
