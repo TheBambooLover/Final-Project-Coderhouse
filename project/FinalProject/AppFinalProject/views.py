@@ -63,7 +63,7 @@ class CreateUser(View):
 class CreatePost(View):
     form_class = PostForm
     template_name = "AppFinalProject/create_post.html"
-    initial = {'writter':"", 'title':"", 'text':"" ,'image':""}
+    initial = {'writter':"", 'title':"", 'text':"" ,'image':"", 'image':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
