@@ -126,4 +126,4 @@ class UpdatePost(UpdateView):
 
 class DeletePost(DeleteView):
     model = Post
-    succes_url = "/AppFinalProject/posts"
+    success_url = "/AppFinalProject/posts"
