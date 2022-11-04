@@ -1,51 +1,50 @@
 {% extends 'AppFinalProject/base.html' %}
 {% block title %}Post page{% endblock %}
-        {% block header %}
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="post-heading">
-                            <h1>Information must be always available</h1>
-                            <h2 class="subheading">No one should control it</h2>
-                            <span class="meta">
-                                Posted by
-                                <a href="#!">Free for all Media</a>
-                            </span>
-                        </div>
-                    </div>
+{% block header %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>Information must be always available</h1>
+                    <h2 class="subheading">No one should control it</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="{% url 'about' %}">Free for all Media</a>
+                    </span>
                 </div>
             </div>
-        </header>{% endblock %}
+        </div>
+    </div>
+</header>{% endblock %}
 {% block contenido %}
-        <!-- Post Content-->
-        <article class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <ul>
-                            {% for post in object_list %}
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul>
+                    {% for post in object_list %}
 
-                            <li>
-                                <h1>{{ post.title }}</h1>
-                                    <h2>{{ post.writter }}</h2>
-                                    <img src="{{post.image}}"></img>
-                                    <a href="{% url 'Detail' post.id %}"> Read</a>
-                                    <a href="{% url 'New' %}"> Create post</a>
-                            </li>
-                            {% endfor %}
-                            <img src="/project/FinalProject/posts/descarga.jpg"></img>
-                        </ul>
-                    </div>
-                </div>
+                    <li>
+                        <a href="{% url 'Detail' post.id %}">
+                            <h1>{{ post.title }}</h1>
+                        </a>
+                        <h2 href="{% url 'Detail' post.id %}">{{ post.writter }}</h2>
+                        <img src={{post.image}}>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </article>
+        </div>
+    </div>
+</article>
 {% endblock %}
 {% block bottomscript %}
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 
 {% endblock %}
