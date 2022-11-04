@@ -1,8 +1,14 @@
 from tokenize import group
 from django.shortcuts import render
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm
 from django.views import View
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+
 
 def home(request):
     return render(request, "AppFinalProject/home.html")
@@ -60,26 +66,6 @@ class CreateUser(View):
         
         return render(request, self.template_name, {"form": form})
 
-class CreatePost(View):
-    form_class = PostForm
-    template_name = "AppFinalProject/create_post.html"
-    initial = {'writter':"", 'title':"", 'text':"" ,'image':"", 'image':""}
-
-    def get(self, request):
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form':form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            msg_exito = f"se cargo con éxito el artículo {form.cleaned_data.get('title')}"
-            form = self.form_class(initial=self.initial)
-            return render(request, self.template_name, {'form':form, 
-                                                        'msg_exito': msg_exito})
-        
-        return render(request, self.template_name, {"form": form})
-
 class CreateComment(View):
     form_class = CommentForm
     template_name = "AppFinalProject/create_comment.html"
@@ -119,3 +105,25 @@ class CreateWritter(View):
                                                         'msg_exito': msg_exito})
         
         return render(request, self.template_name, {"form": form})
+
+class ListPosts(ListView):
+    model = Post
+    template_name="AppFinalProject/posts_list.html"
+
+class DetailPost(DetailView):
+    model = Post
+    template_name="AppFinalProject/post_detail.html"
+
+class CreatePost(CreateView):
+    model = Post
+    success_url = "/AppFinalProject/posts"
+    fields = ['writter', 'title', 'text', 'image']
+
+class UpdatePost(UpdateView):
+    model=Post
+    success_url = "/AppFinalProject/posts"
+    fields = ['writter', 'title', 'text', 'image']
+
+class DeletePost(DeleteView):
+    model = Post
+    succes_url = "/AppFinalProject/posts"

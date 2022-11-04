@@ -15,11 +15,6 @@ class WritterForm(forms.ModelForm):
     model = User
     fields = ['username', 'password', 'email','about', 'group']
 
-class PostForm(forms.ModelForm):
-  class Meta:
-    model = Post
-    fields = ['writter', 'title', 'text', 'image']
-
 class CommentForm(forms.ModelForm):
   class Meta:
     model = Comment

@@ -26,7 +26,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     votes=models.IntegerField(default=0)
     text=models.CharField(max_length=300)
-    image=models.ImageField(upload_to="posts", null=True)
+    image=models.ImageField(upload_to="project\FinalProject\posts", null=True)
 
     def __str__(self):
         return f"{self.title}"
