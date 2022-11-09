@@ -15,9 +15,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-
-from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
-
 @login_required
 def home(request):
     return render(request, "AppFinalProject/home.html")
