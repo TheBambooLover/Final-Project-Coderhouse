@@ -14,5 +14,7 @@ urlpatterns = [
     path('create-comment',views.CreateComment.as_view()),
     path('create-writter',views.CreateWritter.as_view()),
     path('writters',views.show_writters,name='writters'),
+    path('login',views.Login.as_view(),name='login'),
+    path('logout',views.Logout.as_view(),name='logout'),
 
 ]

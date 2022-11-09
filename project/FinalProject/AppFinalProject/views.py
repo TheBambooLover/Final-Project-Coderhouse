@@ -1,10 +1,15 @@
 from tokenize import group
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from AppFinalProject.models import User
 from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
-from django.views import View
-from django.views.generic import ListView
 
+@login_required
 def home(request):
     return render(request, "AppFinalProject/home.html")
 
@@ -14,12 +19,12 @@ def posts(request):
 def about(request):
         return render(request, "AppFinalProject/about.html")
 
-class UsersList(ListView):
-    model = User
-
 def show_writters(request):
     writters = User.objects.filter(group_id=3).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
+
+class UsersList(ListView):
+    model = User
 
 class BuscarUser(View):
     form_class = Buscar
@@ -119,3 +124,10 @@ class CreateWritter(View):
                                                         'msg_exito': msg_exito})
         
         return render(request, self.template_name, {"form": form})
+
+class Login(LoginView):
+    template_name = 'AppFinalProject/login.html'
+    next_page = reverse_lazy("home")
+
+class Logout(LogoutView):
+    template_name = 'AppFinalProject/logout.html'
