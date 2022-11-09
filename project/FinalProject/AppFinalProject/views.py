@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from AppFinalProject.models import User
 from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
 
@@ -131,3 +132,8 @@ class Login(LoginView):
 
 class Logout(LogoutView):
     template_name = 'AppFinalProject/logout.html'
+
+class SignUp(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "AppFinalProject/registration/signup.html"
