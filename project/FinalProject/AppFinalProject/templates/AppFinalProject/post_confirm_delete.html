@@ -1,17 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Post</title>
-</head>
-<body>
+{% extends 'AppFinalProject/base.html' %}
+{% block title %}Post page{% endblock %}
+{% block header %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>Information must be always available</h1>
+                    <h2 class="subheading">No one should control it</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="{% url 'about' %}">Free for all Media</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>{% endblock %}
+{% block contenido %}
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <form method="post">{% csrf_token %}
+                    ¿Estás seguro que deseas borrar el post "{{ object }}"? Esta acción no se puede revertir"
+                    <input type="submit" value="Eliminar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}
+{% block bottomscript %}
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 
-    <form method="post">{% csrf_token}
-        ¿Estás seguro que deseas borrar el post "{{ object }}"? Esta acción no se puede revertir"
-        <input type="submit" value="Eliminar"/>
-    </form>
-    
-</body>
-</html>
+{% endblock %}
