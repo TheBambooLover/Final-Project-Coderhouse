@@ -131,8 +131,8 @@ class UpdatePost(UpdateView):
 
 class DeletePost(DeleteView):
     model = Post
-<<<<<<< HEAD
-    succes_url = "/AppFinalProject/posts"
+    success_url = "/AppFinalProject/posts"
+
 class Login(LoginView):
     template_name = 'AppFinalProject/login.html'
     next_page = reverse_lazy("home")
@@ -144,6 +144,3 @@ class SignUp(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "AppFinalProject/registration/signup.html"
-=======
-    success_url = "/AppFinalProject/posts"
->>>>>>> classView
