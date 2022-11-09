@@ -8,7 +8,7 @@ class User(models.Model):
     username = models.CharField(max_length=18)
     password = models.CharField(max_length=22)
     email = models.CharField(max_length=300)
-    icon = models.ImageField(upload_to="usersicons", default="placeholder.jpg")
+    icon = models.ImageField(upload_to="djangouploads/useruploads/images", null=True)
     about = models.CharField(max_length=500, null=True)
     writter = models.BooleanField(default=0)
 
@@ -20,7 +20,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     votes=models.IntegerField(default=0)
     text=models.CharField(max_length=300)
-    image=models.ImageField(upload_to="posts", null=True)
+    image=models.ImageField(upload_to="djangouploads/postuploads/images", null=True)
 
     def __str__(self):
         return f"{self.title}"
