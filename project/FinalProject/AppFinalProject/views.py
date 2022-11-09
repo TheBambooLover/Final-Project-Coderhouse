@@ -19,12 +19,15 @@ from django.urls import reverse_lazy
 def home(request):
     return render(request, "AppFinalProject/home.html")
 
+@login_required
 def posts(request):
         return render(request, "AppFinalProject/posts.html")
-        
+
+@login_required        
 def about(request):
         return render(request, "AppFinalProject/about.html")
 
+@login_required
 def show_writters(request):
     writters = User.objects.filter(writter=True).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
@@ -111,25 +114,25 @@ class CreateWritter(View):
         
         return render(request, self.template_name, {"form": form})
 
-class ListPosts(ListView):
+class ListPosts(LoginRequiredMixin,ListView):
     model = Post
     template_name="AppFinalProject/posts_list.html"
 
-class DetailPost(DetailView):
+class DetailPost(LoginRequiredMixin,DetailView):
     model = Post
     template_name="AppFinalProject/post_detail.html"
 
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin,CreateView):
     model = Post
     success_url = "/AppFinalProject/posts"
     fields = ['writter', 'title', 'text', 'image']
 
-class UpdatePost(UpdateView):
+class UpdatePost(LoginRequiredMixin,UpdateView):
     model=Post
     success_url = "/AppFinalProject/posts"
     fields = ['writter', 'title', 'text', 'image']
 
-class DeletePost(DeleteView):
+class DeletePost(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = "/AppFinalProject/posts"
 
