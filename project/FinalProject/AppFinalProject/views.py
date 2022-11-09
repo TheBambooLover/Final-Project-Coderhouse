@@ -1,5 +1,12 @@
 from tokenize import group
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from AppFinalProject.models import User
 from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm
 from django.views import View
@@ -9,7 +16,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 
+from AppFinalProject.forms import Buscar, CommentForm, PostForm, UserForm,Post, WritterForm
 
+@login_required
 def home(request):
     return render(request, "AppFinalProject/home.html")
 
@@ -19,13 +28,12 @@ def posts(request):
 def about(request):
         return render(request, "AppFinalProject/about.html")
 
-def show_users(request):
-  users = User.objects.all()
-  return render(request, "AppFinalProject/users.html", {"users": users})
-
 def show_writters(request):
-    writters = User.objects.filter(group_id=3).all()
+    writters = User.objects.filter(writter=True).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
+
+class UsersList(ListView):
+    model = User
 
 class BuscarUser(View):
     form_class = Buscar
@@ -40,7 +48,7 @@ class BuscarUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
-            users = User.objects.filter(username__icontains=username,group_id=2).all()
+            users = User.objects.filter(username__icontains=username,writter=False).all()
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'users':users})
@@ -49,7 +57,7 @@ class BuscarUser(View):
 class CreateUser(View):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
-    initial = {'username':"", 'password':"", 'email':"" , 'group':"2"}
+    initial = {'username':"", 'password':"", 'email':"" , 'writter':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -89,7 +97,7 @@ class CreateComment(View):
 class CreateWritter(View):
     form_class = WritterForm
     template_name = "AppFinalProject/new_writter.html"
-    initial = {'username':"", 'password':"", 'email':"" ,'group':"3", 'about':""}
+    initial = {'username':"", 'password':"", 'email':"" ,'writter':1, 'about':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -127,3 +135,14 @@ class UpdatePost(UpdateView):
 class DeletePost(DeleteView):
     model = Post
     succes_url = "/AppFinalProject/posts"
+class Login(LoginView):
+    template_name = 'AppFinalProject/login.html'
+    next_page = reverse_lazy("home")
+
+class Logout(LogoutView):
+    template_name = 'AppFinalProject/logout.html'
+
+class SignUp(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "AppFinalProject/registration/signup.html"

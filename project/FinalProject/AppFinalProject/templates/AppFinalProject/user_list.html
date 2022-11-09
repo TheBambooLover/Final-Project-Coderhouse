@@ -7,14 +7,11 @@
     <title>Placeholder</title>
 </head>
 <body>
-
-    <h1>Users</h1>
-
-    {% for user in users %}
-        <ul>
-            <li> Usuario: {{user.username}} </li>
+<h1>Users</h1>
+    <ul>        
+        {% for users in object_list %}
+            <li>{{users}}</li>
+        {% endfor %}    
         </ul>
-    {% endfor %}
-    
 </body>
 </html>
