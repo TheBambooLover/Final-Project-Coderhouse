@@ -8,12 +8,12 @@ class Buscar(forms.Form):
 class UserForm(forms.ModelForm):
   class Meta:
     model = User
-    fields = ['username', 'password', 'email', 'group']
+    fields = ['username', 'password', 'email']
 
 class WritterForm(forms.ModelForm):
   class Meta:
     model = User
-    fields = ['username', 'password', 'email','about', 'group']
+    fields = ['username', 'password', 'email','about','writter']
 
 class PostForm(forms.ModelForm):
   class Meta:

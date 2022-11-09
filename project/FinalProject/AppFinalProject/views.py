@@ -21,7 +21,7 @@ def about(request):
         return render(request, "AppFinalProject/about.html")
 
 def show_writters(request):
-    writters = User.objects.filter(group_id=3).all()
+    writters = User.objects.filter(writter=True).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
 
 class UsersList(ListView):
@@ -40,7 +40,7 @@ class BuscarUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
-            users = User.objects.filter(username__icontains=username,group_id=2).all()
+            users = User.objects.filter(username__icontains=username,writter=False).all()
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
                                                         'users':users})
@@ -49,7 +49,7 @@ class BuscarUser(View):
 class CreateUser(View):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
-    initial = {'username':"", 'password':"", 'email':"" , 'group':"2"}
+    initial = {'username':"", 'password':"", 'email':"" , 'writter':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -109,7 +109,7 @@ class CreateComment(View):
 class CreateWritter(View):
     form_class = WritterForm
     template_name = "AppFinalProject/new_writter.html"
-    initial = {'username':"", 'password':"", 'email':"" ,'group':"3", 'about':""}
+    initial = {'username':"", 'password':"", 'email':"" ,'writter':1, 'about':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)

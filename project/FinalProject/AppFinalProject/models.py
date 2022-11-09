@@ -4,19 +4,13 @@ from unittest.mock import DEFAULT
 from unittest.util import _MAX_LENGTH
 from django.db import models
 
-class Group(models.Model):
-    group = models.CharField(max_length=30)
-
-    def __str__(self):
-        return f"{self.group}"
-
 class User(models.Model):
     username = models.CharField(max_length=18)
     password = models.CharField(max_length=22)
     email = models.CharField(max_length=300)
     icon = models.ImageField(upload_to="usersicons", default="placeholder.jpg")
     about = models.CharField(max_length=500, null=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    writter = models.BooleanField(default=0)
 
     def __str__(self):
         return f"{self.username}"
