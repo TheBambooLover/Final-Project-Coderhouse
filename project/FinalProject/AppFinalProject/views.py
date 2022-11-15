@@ -15,6 +15,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import User, Group
 
 class GroupRequiredMixin(object):
     """
@@ -73,10 +74,10 @@ class BuscarUser(View):
                                                         'users':users})
         return render(request, self.template_name, {"form": form})
 
-class CreateUser(View):
+class CreateUser(CreateView):
     form_class = UserForm
     template_name = "AppFinalProject/new_user.html"
-    initial = {'username':"", 'password':"", 'email':"" , 'writter':""}
+    initial = {'username':"", 'password':"", 'email':"" , 'group':"", 'icon':""}
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
@@ -86,6 +87,13 @@ class CreateUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password=form.cleaned_data.get('password')
+            user = User.objects.create_user(username,email,password)
+            user.save()
+            userGroup = Group.objects.get(name='user')
+            user.groups.add(userGroup)
             msg_exito = f"se cargo con éxito el usuario {form.cleaned_data.get('username')}"
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form':form, 
@@ -93,6 +101,8 @@ class CreateUser(View):
         
         return render(request, self.template_name, {"form": form})
 
+
+    
 class CreateComment(View):
     form_class = CommentForm
     template_name = "AppFinalProject/create_comment.html"
@@ -143,7 +153,7 @@ class DetailPost(LoginRequiredMixin,DetailView):
 
 class CreatePost(LoginRequiredMixin,GroupRequiredMixin,CreateView):
 
-    group_required =[u'writter']
+    group_required =[u'admin',u'writter']
     model = Post
     success_url = "/AppFinalProject/posts"
     fields = ['title', 'text', 'image']
@@ -171,7 +181,8 @@ class UpdatePost(LoginRequiredMixin,GroupRequiredMixin,UpdateView):
     fields = ['writter','title', 'text', 'image']
 
 
-class DeletePost(LoginRequiredMixin,DeleteView):
+class DeletePost(LoginRequiredMixin,GroupRequiredMixin,DeleteView):
+    group_required =[u'admin']
     model = Post
     success_url = "/AppFinalProject/posts"
 
