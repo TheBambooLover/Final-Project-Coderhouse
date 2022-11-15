@@ -1,6 +1,7 @@
 from dataclasses import fields
 from django import forms
 from AppFinalProject.models import Post, User, Comment
+from django.forms import Textarea
 
 class Buscar(forms.Form):
   username = forms.CharField(max_length=100)
@@ -21,6 +22,8 @@ class CommentForm(forms.ModelForm):
     fields = ['user', 'text', 'post']
 
 class PostForm(forms.ModelForm):
+  text = forms.CharField(widget=Textarea(attrs={'class': 'form-control', 'rows': '4', 'cols': '10'}))
+
   class Meta:
     model = Post
     fields = ['writter', 'title', 'text', 'image']

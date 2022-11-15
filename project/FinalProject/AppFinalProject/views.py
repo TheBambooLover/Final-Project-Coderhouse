@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from AppFinalProject.models import User
@@ -14,6 +14,25 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
+
+class GroupRequiredMixin(object):
+    """
+        group_required - list of strings, required param
+    """
+
+    group_required = None
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise PermissionDenied
+        else:
+            user_groups = []
+            for group in request.user.groups.values_list('name', flat=True):
+                user_groups.append(group)
+            if len(set(user_groups).intersection(self.group_required)) <= 0:
+                raise PermissionDenied
+        return super(GroupRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 @login_required
 def home(request):
@@ -122,17 +141,35 @@ class DetailPost(LoginRequiredMixin,DetailView):
     model = Post
     template_name="AppFinalProject/post_detail.html"
 
-class CreatePost(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
-    permission_required = ''
-    
+class CreatePost(LoginRequiredMixin,GroupRequiredMixin,CreateView):
+
+    group_required =[u'writter']
     model = Post
     success_url = "/AppFinalProject/posts"
-    fields = ['writter', 'title', 'text', 'image']
+    fields = ['title', 'text', 'image']
 
-class UpdatePost(LoginRequiredMixin,UpdateView):
+    def get_initial(self):
+        initial = super(CreatePost, self).get_initial()
+        initial.update({'writter': self.request.user.username,
+                        'title':"",
+                        'text':"",
+                        'image':""})
+        return initial
+
+    def form_valid(self, form):
+        """Force the user to request.user"""
+        self.object = form.save(commit=False)
+        self.object.writter = self.request.user.username
+        self.object.save()
+
+        return super(CreatePost, self).form_valid(form)
+
+class UpdatePost(LoginRequiredMixin,GroupRequiredMixin,UpdateView):
+    group_required =[u'admin']
     model=Post
     success_url = "/AppFinalProject/posts"
-    fields = ['writter', 'title', 'text', 'image']
+    fields = ['writter','title', 'text', 'image']
+
 
 class DeletePost(LoginRequiredMixin,DeleteView):
     model = Post

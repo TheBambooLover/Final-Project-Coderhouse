@@ -1,4 +1,5 @@
 {% extends 'AppFinalProject/base.html' %}
+{% load widget_tweaks %}
 {% block title %}Post page{% endblock %}
 {% block header %}
 <!-- Page Header-->
@@ -18,19 +19,30 @@
         </div>
     </div>
 </header>{% endblock %}
-{% block contenido %}
+{% block contenido %}   
 <!-- Post Content-->
 <article class="mb-4">
     <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <input type="submit" value="Crear"/>
-                </form>
-            </div>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-4">{{form.title.label}}</div>
+            <div class="col-8">{{form.title}}</div>
         </div>
+        <div class="row">
+            <div class="col-4">{{form.writter.label}}</div>
+            <div class="col-8">{{form.writter}}</div>
+        </div>
+        <div class="row">
+            <div class="col-4">{{form.text.label}}</div>
+            <div class="col-8">{{form.text}}</div>
+        </div>
+        <div class="row">
+            <div class="col-4">{{form.image.label}}</div>
+            <div class="col-8">{{form.image}}</div>
+        </div>
+        <input type="submit" value="Guardar">
+    </form>
     </div>
 </article>
 {% endblock %}

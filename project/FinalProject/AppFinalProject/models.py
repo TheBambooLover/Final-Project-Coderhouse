@@ -17,10 +17,10 @@ class User(models.Model):
         return f"{self.username}"
 
 class Post(models.Model):
-    writter = models.ForeignKey(User, on_delete=models.CASCADE)
+    writter = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     votes=models.IntegerField(default=0)
-    text=models.CharField(max_length=300)
+    text=models.TextField(max_length=30000)
     image=models.ImageField(upload_to="djangouploads/postuploads/images", null=True)
     posted_at=models.DateField(auto_now_add=True)
 
