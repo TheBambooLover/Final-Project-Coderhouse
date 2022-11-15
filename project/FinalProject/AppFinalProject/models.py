@@ -6,9 +6,9 @@ from django.db import models
 from datetime import date
 
 class User(models.Model):
-    username = models.CharField(max_length=18)
+    username = models.CharField(max_length=18, unique=True)
     password = models.CharField(max_length=22)
-    email = models.CharField(max_length=300)
+    email = models.CharField(max_length=300, unique=True)
     icon = models.ImageField(upload_to="djangouploads/useruploads/images", null=True)
     about = models.CharField(max_length=500, null=True)
     writter = models.BooleanField(default=0)
