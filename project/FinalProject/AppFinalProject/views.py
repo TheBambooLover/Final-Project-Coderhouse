@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from AppFinalProject.models import User
@@ -122,7 +122,9 @@ class DetailPost(LoginRequiredMixin,DetailView):
     model = Post
     template_name="AppFinalProject/post_detail.html"
 
-class CreatePost(LoginRequiredMixin,CreateView):
+class CreatePost(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+    permission_required = ''
+    
     model = Post
     success_url = "/AppFinalProject/posts"
     fields = ['writter', 'title', 'text', 'image']
