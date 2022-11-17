@@ -6,7 +6,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('home/',views.home,name='home'),
-    path('about/',views.about,name='about'),
+    path('about/',views.about,name='about'),    
+    path('logout',views.Logout.as_view(),name='logout'),
     path('writters/',views.show_writters,name='writters'),
     path('search-users',views.BuscarUser.as_view()),
     path('create-user',views.CreateUser.as_view()),
@@ -19,7 +20,6 @@ urlpatterns = [
     path(r'^edit/(?P<pk>\d+)$',views.UpdatePost.as_view(), name='Edit'),
     path(r'^delete/(?P<pk>\d+)$',views.DeletePost.as_view(), name='Delete'),
     path('login',views.Login.as_view(),name='login'),
-    path('logout',views.Logout.as_view(),name='logout'),
     path('signup/', views.SignUp.as_view(), name="signup"),
 
 ]
