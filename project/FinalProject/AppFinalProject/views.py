@@ -35,7 +35,6 @@ class GroupRequiredMixin(object):
                 raise PermissionDenied
         return super(GroupRequiredMixin, self).dispatch(request, *args, **kwargs)
 
-@login_required
 def home(request):
     return render(request, "AppFinalProject/home.html")
 
@@ -191,7 +190,7 @@ class Login(LoginView):
     next_page = reverse_lazy("home")
 
 class Logout(LogoutView):
-    template_name = 'AppFinalProject/logout.html'
+    template_name = 'AppFinalProject/home.html'
 
 class SignUp(CreateView):
     form_class = UserCreationForm
