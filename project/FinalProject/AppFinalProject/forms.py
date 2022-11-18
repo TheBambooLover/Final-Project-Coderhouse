@@ -2,6 +2,8 @@ from dataclasses import fields
 from django import forms
 from AppFinalProject.models import Post, User, Comment
 from django.forms import Textarea
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, UserChangeForm
 
 class Buscar(forms.Form):
   username = forms.CharField(max_length=100)
@@ -27,3 +29,21 @@ class PostForm(forms.ModelForm):
   class Meta:
     model = Post
     fields = ['writter', 'title', 'text', 'image']
+
+class EditUserProfileForm(UserChangeForm):
+    
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter your username"}))
+
+    icon = forms.ImageField()
+
+    class Meta:
+        model = User
+        fields = ['username','icon']
+
+class PasswordChangingForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Old Password'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New Passowrd'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Conform new password'}))
+    class Meta:
+        model = User
+        fields = ['old_password', 'new_password1', 'new_password2']

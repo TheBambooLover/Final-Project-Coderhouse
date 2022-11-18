@@ -1,5 +1,5 @@
 from tokenize import group
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
@@ -16,6 +16,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
+from AppFinalProject.models import User
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditUserProfileForm,PasswordChangingForm
+from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView
 
 class GroupRequiredMixin(object):
     """
@@ -99,9 +103,7 @@ class CreateUser(CreateView):
                                                         'msg_exito': msg_exito})
         
         return render(request, self.template_name, {"form": form})
-
-
-    
+  
 class CreateComment(View):
     form_class = CommentForm
     template_name = "AppFinalProject/create_comment.html"
@@ -179,7 +181,6 @@ class UpdatePost(LoginRequiredMixin,GroupRequiredMixin,UpdateView):
     success_url = "/AppFinalProject/posts"
     fields = ['writter','title', 'text', 'image']
 
-
 class DeletePost(LoginRequiredMixin,GroupRequiredMixin,DeleteView):
     group_required =[u'admin']
     model = Post
@@ -196,3 +197,27 @@ class SignUp(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "AppFinalProject/registration/signup.html"
+
+class UpdateUserView(LoginRequiredMixin,UpdateView):
+    form_class = EditUserProfileForm
+    login_url = 'login'
+    template_name = "AppFinalProject/user_custom/edit_profile.html"
+    success_url = reverse_lazy('home')
+    success_message = "User updated"
+
+    def get_object(self):
+        return self.request.user
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR,
+                             "Please submit the form carefully")
+        return redirect('home')
+
+class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    form_class = PasswordChangingForm
+    login_url = 'login'
+    success_url = reverse_lazy('password_success')
+
+
+def password_success(request):
+    return render(request, "authors/password_change_success.html")

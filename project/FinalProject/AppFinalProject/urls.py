@@ -21,6 +21,7 @@ urlpatterns = [
     path(r'^delete/(?P<pk>\d+)$',views.DeletePost.as_view(), name='Delete'),
     path('login',views.Login.as_view(),name='login'),
     path('signup/', views.SignUp.as_view(), name="signup"),
+    path('custom-profile',views.UpdateUserView.as_view()),
 
 ]
 
