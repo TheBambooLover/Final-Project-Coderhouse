@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from AppFinalProject.models import User
 from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditProfileForm
 from django.views import View
+from django.contrib.auth.models import User as UserDjango
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -52,7 +53,7 @@ def about(request):
 
 @login_required
 def show_writters(request):
-    writters = User.objects.filter(writter=True).all()
+    writters = UserDjango.objects.filter(groups=1).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
 
 
