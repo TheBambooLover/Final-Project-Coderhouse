@@ -6,9 +6,9 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditProfileForm
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -17,7 +17,7 @@ from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditUserProfileForm,PasswordChangingForm
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm,PasswordChangingForm
 from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 
@@ -54,6 +54,28 @@ def about(request):
 def show_writters(request):
     writters = User.objects.filter(writter=True).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
+
+
+
+@login_required
+def Profile(request):
+    args = {'user':request.user}
+    return render(request, 'AppFinalProject/profile.html',args)
+
+
+@login_required
+def EditProfile(request):
+
+    if request.method=='POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('AppFinalProject/home/')
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form':form}
+        return render(request,'AppFinalProject/profile',args)    
 
 class UsersList(ListView):
     model = User
@@ -197,21 +219,6 @@ class SignUp(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "AppFinalProject/registration/signup.html"
-
-class UpdateUserView(LoginRequiredMixin,UpdateView):
-    form_class = EditUserProfileForm
-    login_url = 'login'
-    template_name = "AppFinalProject/user_custom/edit_profile.html"
-    success_url = reverse_lazy('home')
-    success_message = "User updated"
-
-    def get_object(self):
-        return self.request.user
-
-    def form_invalid(self, form):
-        messages.add_message(self.request, messages.ERROR,
-                             "Please submit the form carefully")
-        return redirect('home')
 
 class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangingForm
