@@ -47,4 +47,8 @@ class PasswordChangingForm(PasswordChangeForm):
     new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Conform new password'}))
     class Meta:
         model = UserDjango
-        fields = ['old_password', 'new_password1', 'new_password2']
+        fields = (
+          'old_password',
+          'new_password1',
+          'new_password2',
+          )

@@ -76,7 +76,7 @@ def EditProfile(request):
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form':form}
-        return render(request,'AppFinalProject/profile',args)    
+        return render(request,'AppFinalProject/user_custom/edit_profile.html',args)    
 
 class UsersList(ListView):
     model = User
@@ -228,4 +228,4 @@ class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 
 def password_success(request):
-    return render(request, "authors/password_change_success.html")
+    return render(request, "AppFinalProject/user_custom/password_change_success.html")
