@@ -31,7 +31,7 @@ class PostForm(forms.ModelForm):
     fields = ['writter', 'title', 'text', 'image']
 
 class EditProfileForm(UserChangeForm):
-    
+    password = None  
     class Meta:
         model = UserDjango
         fields = (
