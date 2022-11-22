@@ -23,9 +23,12 @@
 
 <body>
     {%block nav%}
+
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+
         <div class="container px-4 px-lg-5">
+
             <a class="navbar-brand" href="/AppFinalProject/home">Project Name Placeholder</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,16 +44,29 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 " href="{% url 'login' %}" style="color: yellow;"> Login</a></li> <!--hide the login when logged in-->
                     <li class="nav-item"><a class="nav-link px-lg-8 py-7 py-lg-2"  href="{% url 'profile' %}"></a><i class="fa-solid fa-user"></i></li>
                     <li class="nav-item"><a class = "nav-link px-lg-3 py-3 py-lg-4"  href="{% url 'profile' %}" >{{user.username}}</a></li>
-                    
-                    
+
+{%for message in  messages %}
+    <div class="alert alert-{{message}} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{%endfor%}                    
                 </ul>
             </div>
         </div>
+
     </nav>
     {% endblock %}
-    <header>
-        {% block header%}{% endblock %}
+   {% block header%} 
+   <header>
+    {%for message in  messages %}
+        <div class="alert alert-{{message}} alert-dismissible fade show" role="alert">
+            <strong>Message:</strong> {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    {%endfor%}
     </header>
+    {% endblock %}
     {% block contenido %}{% endblock %}
     <!-- footer -->
     <footer class="border-top">
