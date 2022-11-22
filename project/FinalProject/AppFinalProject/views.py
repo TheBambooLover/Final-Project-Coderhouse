@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditProfileForm
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm, EditUserProfileForm
 from django.views import View
 from django.contrib.auth.models import User as UserDjango
 from django.views.generic import ListView
@@ -62,19 +62,20 @@ def Profile(request):
     args = {'user':request.user}
     return render(request, 'AppFinalProject/profile.html',args)
 
-@login_required
-def EditProfile(request):
+class UpdateUserView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    form_class = EditUserProfileForm
+    login_url = 'login'
+    template_name = "AppFinalProject/user_custom/edit_profile.html"
+    success_url = reverse_lazy('home')
+    success_message = "User updated"
 
-    if request.method=='POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+    def get_object(slef):
+        return slef.request.user
 
-        if form.is_valid():
-            form.save()
-            return redirect('AppFinalProject/home/')
-    else:
-        form = EditProfileForm(instance=request.user)
-        args = {'form':form}
-        return render(request,'AppFinalProject/user_custom/edit_profile.html',args)    
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR,
+                             "Please submit the form carefully")
+        return redirect('home')
 
 class UsersList(ListView):
     model = User

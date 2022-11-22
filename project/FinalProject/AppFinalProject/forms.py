@@ -30,15 +30,20 @@ class PostForm(forms.ModelForm):
     model = Post
     fields = ['writter', 'title', 'text', 'image']
 
-class EditProfileForm(UserChangeForm):
-    password = None  
+class EditUserProfileForm(UserChangeForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': "Enter your email"}))
+    
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter your first name"}))
+
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter your last name"}))
+
+    username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter your username"}))
+    
+    password = None
     class Meta:
         model = UserDjango
         fields = (
-          'email',
-          'username',
-          'first_name',
-          'last_name',
+          'username', 'first_name', "last_name", 'email'
           )
 
 class PasswordChangingForm(PasswordChangeForm):
