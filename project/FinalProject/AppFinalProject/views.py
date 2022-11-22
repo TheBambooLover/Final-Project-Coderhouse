@@ -18,9 +18,10 @@ from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
 from AppFinalProject.models import User
-from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm,PasswordChangingForm
+from AppFinalProject.forms import Buscar, CommentForm, UserForm,Post, WritterForm,PasswordChangingForm,SignupForm
 from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
 class GroupRequiredMixin(object):
     """
@@ -56,13 +57,10 @@ def show_writters(request):
     writters = UserDjango.objects.filter(groups=1).all()
     return render(request,"AppFinalProject/writters.html",{"writters":writters})
 
-
-
 @login_required
 def Profile(request):
     args = {'user':request.user}
     return render(request, 'AppFinalProject/profile.html',args)
-
 
 @login_required
 def EditProfile(request):
@@ -216,16 +214,21 @@ class Login(LoginView):
 class Logout(LogoutView):
     template_name = 'AppFinalProject/home.html'
 
-class SignUp(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
+class SignUp(SuccessMessageMixin,CreateView):
+    form_class = SignupForm
     template_name = "AppFinalProject/registration/signup.html"
+    success_url = reverse_lazy('login')
+    success_message = "User has been created, please login with your username and password"
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR,
+                             "Please enter details properly")
+        return redirect('home')
 
 class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangingForm
     login_url = 'login'
     success_url = reverse_lazy('password_success')
-
 
 def password_success(request):
     return render(request, "AppFinalProject/user_custom/password_change_success.html")

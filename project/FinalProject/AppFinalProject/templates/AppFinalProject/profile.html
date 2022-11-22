@@ -19,18 +19,32 @@
 <!-- Post Content-->
 <article class="mb-4">
     <div class="container px-4 px-lg-5">
+            <div class="col-md-6">
+                <label for="fname" class="form-label">First Name:</label>
+                {{user.first_name}}
+            </div>
+            <div class="col-md-6">
+                <label for="lname" class="form-label">Last Name:</label>
+                {{user.last_name}}
+            </div>
+            <div class="col-6">
+                <label for="username" class="form-label">Username:</label>
+                {{user.username}}
+            </div>
+            <div class="col-6">
+                <label for="inputAddress2" class="form-label">E-mail:</label>
+                {{user.email}}
+            </div> 
         <div class="row gx-4 gx-lg-5 justify-content-center">
+            
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <p>
-                    {{ user }}
-                    {{ user.email }}
-                </p>
-                <a href="{% url 'edit_profile' %}" class="btn btn-danger">Edit profile info</a>
-                <a href="{% url 'edit_password' %}" class="btn btn-danger">Change password</a>
+                <a style="border-radius: 10px;" href="{% url 'edit_profile' %}" class="btn btn-primary">Edit profile info</a>
+                <a style="border-radius: 10px;" href="{% url 'edit_password' %}" class="btn btn-primary">Change password</a>
+                <a class=" btn btn-danger" href="{% url 'logout' %}">Logout</a>
             </div>
         </div>
-        <a href="{% url 'New' %}" class="btn btn-primary">Create new Post</a> <!-- Acá hay que agregar lógica para que solo se muestre si el user logueado es Writter-->
     </div>
+    
 </article>
 {% endblock %}
 {% block bottomscript %}

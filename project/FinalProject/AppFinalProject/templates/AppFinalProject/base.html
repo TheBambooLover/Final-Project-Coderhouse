@@ -38,9 +38,9 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{%url 'Posts' %}">Posts</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'writters' %}">Writters</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-7 py-lg-8" href="{% url 'login' %}" style="color:rgb(255, 221, 0) " >Login</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-1 py-7 py-lg-8" href="{% url 'logout' %}" style="color:rgb(255, 199, 86) ;">Logout</a></li>
-                    <a href="{% url 'profile' %}" class="btn btn-danger">profile</a>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 " href="{% url 'login' %}" style="color: yellow;"> Login</a></li> <!--hide the login when logged in-->
+                    <li class="nav-item"><a class="nav-link px-lg-8 py-7 py-lg-2"  href="{% url 'profile' %}"></a><i class="fa-solid fa-user"></i></li>
+                    <li class="nav-item"><a class = "nav-link px-lg-3 py-3 py-lg-4"  href="{% url 'profile' %}" >{{user.username}}</a></li>
                     
                     
                 </ul>
