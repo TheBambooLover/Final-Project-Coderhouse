@@ -1,7 +1,12 @@
 {% block title %}Create new account{% endblock title %}
 
 <h1>Register</h1>
-
+{%for message in  messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Message:</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+{%endfor%}
 <form method="post">
     {% csrf_token %}
     <div class="row">

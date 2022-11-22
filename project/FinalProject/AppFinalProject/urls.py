@@ -25,7 +25,7 @@ urlpatterns = [
     path(r'^profile/edit/$',views.EditProfile, name='edit_profile'),
     path(r'^profile/edit/password/$',views.PasswordChangeView.as_view(template_name="AppFinalProject/user_custom/password_change.html"),
     name='edit_password'),
-      path(r'^profile/edit//$',views.password_success,name='password_success'),
+    path(r'^profile/edit/password_success/$',views.password_success,name='password_success'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
