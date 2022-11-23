@@ -33,7 +33,7 @@ Datos de prueba pre-cargados:
 Django admin:
 
 User: admin
-Pass: admin
+Pass: milanesa
 
 Writter:
 
