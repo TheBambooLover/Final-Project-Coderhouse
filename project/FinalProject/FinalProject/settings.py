@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT=''
@@ -130,3 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = "login"
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'Final-Project-Codehouse.project.AppFinalProject.forms.SignupForm'
+
+MESSAGE_TAGS =  {
+    messages.ERROR: "danger"
+}

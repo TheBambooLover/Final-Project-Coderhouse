@@ -1,6 +1,5 @@
 {% extends 'AppFinalProject/base.html' %}
-{% block title %}
-<title>Profile</title>
+{% block title %}Edit Profile
 {% endblock %}
 {% block header %}
 <!-- Page Header-->
@@ -23,14 +22,28 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{form.as_p}}
-                    <button type="submit">Submit</button>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label >Username</label>
+                            {{form.username}}
+                        </div>
+                
+                        <div class="col-md-12">
+                            <label class="form-label">First name</label>
+                            {{form.first_name}}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Last name</label>
+                            {{form.last_name}}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">email</label>
+                            {{form.email}}
+                      </div>
+                    <button type="submit">Save</button>
                 </form>
-                <a href="{% url 'edit_profile' %}" class="btn btn-danger">Edit profile info</a>
             </div>
         </div>
-        <a href="{% url 'New' %}" class="btn btn-primary">Create new Post</a> <!-- Acá hay que agregar lógica para que solo se muestre si el user logueado es Writter-->
-    </div>
 </article>
 {% endblock %}
 {% block bottomscript %}
@@ -40,3 +53,22 @@
 <script src="js/scripts.js"></script>
 
 {% endblock %}
+
+{% block content %}
+<h2>Update user</h2>
+
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+        <form method="post">
+            {% csrf_token %}
+        
+            {{form}}
+        
+            <br>
+            <button class="btn btn-lg btn-success" type="submit">Update user</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

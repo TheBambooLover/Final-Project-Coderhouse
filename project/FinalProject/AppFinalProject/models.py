@@ -9,7 +9,6 @@ class User(models.Model):
     username = models.CharField(max_length=18, unique=True)
     password = models.CharField(max_length=22)
     email = models.CharField(max_length=300, unique=True)
-    icon = models.ImageField(upload_to="djangouploads/useruploads/images", null=True)
     about = models.CharField(max_length=500, null=True)
     writter = models.BooleanField(default=0)
 
@@ -26,11 +25,3 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.title}"
-
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=300)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=0)
-
-    def __str__(self):
-        return f"{self.text}"
