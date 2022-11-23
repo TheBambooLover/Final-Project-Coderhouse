@@ -1,46 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {%load static%}
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="{% static 'AppFinalProject/css/styles.css' %}" rel="stylesheet" />
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h2 class="text-center text-dark mt-5">Login</h2>
-        <div class="card my-5">
-        {% for message in  messages %}
-          <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-              <strong>Message:</strong> {{message}}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-      {% endfor %}
-          <form class="card-body cardbody-color p-lg-5" method="POST">
-            {% csrf_token %}
-            <div class="text-center">
-              <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
-                width="200px" alt="profile">
-            </div>
+{%load static%}
+<link href="{% static 'AppFinalProject/css/styles.css' %}" rel="stylesheet" />
+{%for message in  messages %}
+    <div class="alert alert-{{message}} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+{%endfor%}    
+    <section class="vh-100 bg-image"
+    style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Login</h2>
+  
+                <form method="post">
+                    {% csrf_token %}
+  
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example3cg">Your username</label>
+                    {{form.username}}
+                  </div>
+  
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example4cg">Password</label> 
+                    {{form.password}}
+                  </div>
 
-            <div class="mb-3">
+                  <div class="d-flex justify-content-center">
+                    <button type="submit"
+                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
+                  </div>
+  
+                  <p class="text-center text-muted mt-5 mb-0">Not registered? <a href="{%url 'signup'%}"
+                      class="fw-bold text-body"><u>Create an account</u></a></p>
+  
+                </form>
+  
+              </div>
             </div>
-            <div class="mb-3">
-              {{form.as_p}}
-            </div>
-            <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
-            <div id="emailHelp" class="form-text text-center mb-5 text-dark">Not
-              Registered? <a href="{%url 'signup'%}" class="text-dark fw-bold"> Create an
-                Account</a>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-</html>
+  </section>
