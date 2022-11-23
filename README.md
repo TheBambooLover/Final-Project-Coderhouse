@@ -9,7 +9,7 @@ Funcionalidades y paths:
     Cerrar sesion: /AppFinalProject/logout
     Listado de posteos:  /AppFinalProject/Posts
     Listado de escritores: /AppFinalProject/writters
-    Creación de posts(Solo escritores): /AppFinalProject/%5Enew$ (Accesible desde la ventana "Posts")
+    Creación de posts(Solo escritores y Admins): /AppFinalProject/%5Enew$ (Accesible desde la ventana "Posts")
     Borrar posts(Solo Admins): /AppFinalProject/%5Edelete/(?P<pk>\d+)$ (Accesible desde la ventana Post Detail)
     Perfil del usuario logueado: /AppFinalProject/%5Eprofile/$
     Edicion de usuario: /AppFinalProject/%5Eprofile/edit/$
