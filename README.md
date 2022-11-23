@@ -19,7 +19,7 @@ Funcionalidades y paths:
     
 Tambien se pueden apreciar las distintas vistas donde serán implementadas dichas funcionalidades en el path:/AppFinalProject/home/
 
-Todas las vistas requieren de usuario registrado y logueado para ser accedidas.
+Todas las vistas requieren que el usuario este registrado y logueado para ser accedidas.
 
 Cada uno está implementado con un form en la URL indicado.
 
