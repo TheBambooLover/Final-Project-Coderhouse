@@ -7,12 +7,7 @@ from django.conf import settings
 urlpatterns = [
     path('home/',views.home,name='home'),
     path('about/',views.about,name='about'),    
-    path('logout',views.Logout.as_view(),name='logout'),
-    path('writters/',views.show_writters,name='writters'),
-    path('search-users',views.BuscarUser.as_view()),
-    path('create-user',views.CreateUser.as_view()),
-    path('create-comment',views.CreateComment.as_view()),
-    path('create-writter',views.CreateWritter.as_view()),
+    path('logout',views.Logout.as_view(),{'next_page': '/login/'}, name='logout'),
     path('writters',views.show_writters,name='writters'),
     path('posts', views.ListPosts.as_view(), name='Posts'),
     path(r'^(?P<pk>\d+)$', views.DetailPost.as_view(), name="Detail"),
