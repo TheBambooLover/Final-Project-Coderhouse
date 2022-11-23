@@ -29,14 +29,18 @@ La creación de "Posts" solo está habilitada para aquellos usuarios que se encu
 La modificación y/o eliminación de "Posts" solo está habilitada para aquellos usuarios que se encuentren dentro del grupo "admin"
 
 Datos de prueba pre-cargados:
+
 Django admin:
+
 User: admin
 Pass: admin
 
 Writter:
+
 User: Cosetti
 Pass: empanada
 
 Usuario común:
+
 User: Canovari
 Pass: milanesa22
