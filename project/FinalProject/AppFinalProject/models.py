@@ -18,7 +18,6 @@ class User(models.Model):
 class Post(models.Model):
     writter = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
-    votes=models.IntegerField(default=0)
     text=models.TextField(max_length=30000)
     image=models.ImageField(upload_to="djangouploads/postuploads/images", null=True)
     posted_at=models.DateField(auto_now_add=True)
